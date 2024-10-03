@@ -1,0 +1,50 @@
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3.0 4.0 5.0                                                                                                         
+3.00000 4.00000 5.00000 Right Scalene Triangle                                                                                                                                               
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i 3.0 4.0 5.0                                                                                                         
+3 4 5 Right Scalene Triangle                                                                                                                                                                 
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3 4 5      
+3.00000 4.00000 5.00000 Right Scalene Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3 3 a
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i 3 3 a
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i a 3 3
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d a 3 3
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3 3 3
+3.00000 3.00000 3.00000 Equilateral Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i 3 3 3
+3 3 3 Equilateral Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3.002 3 3
+3.00000 3.00000 3.00200 Isosceles Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3.000 3 3.002
+3.00000 3.00000 3.00200 Isosceles Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i 3.000 3 3.002
+3 3 3 Equilateral Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i 3.002 3 3    
+3 3 3 Equilateral Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -k          
+Invalid arguments. Please use the format -d/-i # # # or -d/-i or none.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -k 3
+Invalid number of arguments. Please use the format -d/-i # # # or -d/-i or none.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -   
+Invalid arguments. Please use the format -d/-i # # # or -d/-i or none.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe a
+Invalid arguments. Please use the format -d/-i # # # or -d/-i or none.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe 3 4 5
+3 4 5 Right Scalene Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe 3.0 4.0 5.0
+3 4 5 Right Scalene Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -3 4 5     
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -i -3 4 5
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d -3 4 5
+Please enter ONLY positive numbers.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -k -3 4 5
+Invalid arguments. Please use the format -d/-i # # # or -d/-i or none.
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3 4 5.00001
+3.00000 4.00000 5.00001 Right Scalene Triangle
+PS C:\Users\nguyen\Desktop\Computing 3\homework\answer\hw2> .\hw2.exe -d 3 4.001 5.00001
+3.00000 4.00100 5.00001 Scalene Triangle
