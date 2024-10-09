@@ -8,9 +8,10 @@ void sortInputs(int numbers[], int size);
 void sortInputs(double numbers[], int size);
 bool convertStringToInt(const char *arg, int &number);
 bool convertStringToDouble(const char *arg, double &number);
+void printInputsWithPrecision(double numbers[], int precision);
 
-char* triangles(int a, int b, int c);
-char* triangles(double a, double b, double c);
+const char* triangles(int a, int b, int c); // ensure that we return it as a constant char pointer since it is read-only. Otherwise, there will be problems if the string is attempted to access
+const char* triangles(double a, double b, double c);
 
 int main(int argc, char *argv[])
 {
@@ -81,7 +82,8 @@ int main(int argc, char *argv[])
 
                 // sort input
                 sortInputs(numbers, size);
-                triangles(numbers[0], numbers[1], numbers[2]);
+                printInputsWithPrecision(numbers, 5);
+                std::cout << triangles(numbers[0], numbers[1], numbers[2]) << std::endl;
             }
             else
             {
@@ -101,7 +103,7 @@ int main(int argc, char *argv[])
 
                 // sort input
                 sortInputs(numbers, size);
-                triangles((int)numbers[0], (int)numbers[1], (int)numbers[2]);
+                std::cout << triangles(numbers[0], numbers[1], numbers[2]) << std::endl;
             }
         }
         else if ((argc == 4) || (argc == 5))
@@ -127,7 +129,8 @@ int main(int argc, char *argv[])
 
                 // sort input
                 sortInputs(numbers, size);
-                triangles(numbers[0], numbers[1], numbers[2]);
+                printInputsWithPrecision(numbers, 5);
+                std::cout << triangles(numbers[0], numbers[1], numbers[2]) << std::endl;
             }
             else
             {
@@ -150,7 +153,7 @@ int main(int argc, char *argv[])
 
                 // sort input
                 sortInputs(numbers, size);
-                triangles(numbers[0], numbers[1], numbers[2]);
+                std::cout << triangles(numbers[0], numbers[1], numbers[2]) << std::endl;
             }
         }
         else
@@ -161,65 +164,39 @@ int main(int argc, char *argv[])
     }
 }
 
-char* triangles(int a, int b, int c)
+const char* triangles(int a, int b, int c)
 {
     std::cout << a << " " << b << " " << c << " ";
 
     if (a + b <= c)
-    {
-        std::cout << "Not a triangle" << std::endl;
-        return;
-    }
+        return "Not a Triangle";
 
     bool isRight = (a * a + b * b == c * c);
 
     if (a == b && b == c)
-    {
-        std::cout << "Equilateral Triangle" << std::endl;
-        return;
-    }
+        return "Equilateral Triangle";
     else if (a == b || b == c)
     {
-        std::cout << (isRight ? "Right " : "") << "Isosceles Triangle" << std::endl;
-        return;
+        if (isRight)
+            return "Right Isosceles Triangle";
+        else
+            return "Isosceles Triangle";
     }
     else
     {
-        std::cout << (isRight ? "Right " : "") << "Scalene Triangle" << std::endl;
-        return;
+        if (isRight)
+            return "Right Scalene Triangle";
+        else
+            return "Scalene Triangle";
     }
 }
 
-char* triangles(double a, double b, double c)
+const char* triangles(double a, double b, double c)
 {
     const double EPSILON = 0.001;
 
-    for (int i = 0; i < 3; i++)
-    {
-        // prints the whole number part of the decimal
-        double num = (i == 0) ? a : (i == 1) ? b : c; // if i==0, num = a, if i==1, num  = b, if i==2, num = c
-        int integerPart = (int)num;
-        double decimalPart = num - integerPart;
-        int fraction = (int)(decimalPart * 100000 + 0.5); // adds 0.5 for rounding. Ex: if 0.123456 * 100000, then we have 12345.6 + 0.5 = 12346.1, which rounds down to 12346 when casted to an int
-
-        std::cout << integerPart << ".";
-
-        int fractionalDivider = 10000;
-        while (fractionalDivider > 0)
-        {
-            int digit = fraction / fractionalDivider; // ex: 12345 / 10000 -> 1
-            std::cout << digit;                       // prints a digit at a time
-            fraction %= fractionalDivider;            // ex: 12345 % 10000 -> 2345
-            fractionalDivider /= 10;
-        }
-        std::cout << " ";
-    }
-
     if (a + b <= c)
-    {
-        std::cout << "Not a triangle" << std::endl;
-        return;
-    }
+        return "Not a Triangle";
 
     double difference = a * a + b * b - c * c;
     if (difference < 0)
@@ -240,19 +217,20 @@ char* triangles(double a, double b, double c)
     bool isEqualAC = (AC < EPSILON);
 
     if (isEqualAB && isEqualBC && isEqualAC)
-    {
-        std::cout << "Equilateral Triangle" << std::endl;
-        return;
-    }
+        return "Equilateral Triangle";
     else if (isEqualAB || isEqualBC)
     {
-        std::cout << (isRight ? "Right " : "") << "Isosceles Triangle" << std::endl;
-        return;
+        if (isRight)
+            return "Right Isosceles Triangle";
+        else
+            return "Isosceles Triangle";
     }
     else
     {
-        std::cout << (isRight ? "Right " : "") << "Scalene Triangle" << std::endl;
-        return;
+        if (isRight)
+            return "Right Scalene Triangle";
+        else
+            return "Scalene Triangle";
     }
 }
 
@@ -380,4 +358,32 @@ bool convertStringToInt(const char *arg, int &number)
     }
     number = integerPart; // we are passing by reference
     return true;
+}
+
+void printInputsWithPrecision(double numbers[], int precision)
+{
+    int fractionalMultiplier = 1;
+    for (int i = 0; i < precision; ++i)
+        fractionalMultiplier *= 10;
+
+    for (int i = 0; i < 3; i++)
+    {
+        // prints the whole number part of the decimal
+        double num = numbers[i];
+        int integerPart = (int)num;
+        double decimalPart = num - integerPart;
+        int fraction = (int)(decimalPart * fractionalMultiplier + 0.5); // adds 0.5 for rounding. Ex: if 0.123456 * 100000, then we have 12345.6 + 0.5 = 12346.1, which rounds down to 12346 when casted to an int
+
+        std::cout << integerPart << ".";
+
+        int fractionalDivider = 10000;
+        while (fractionalDivider > 0)
+        {
+            int digit = fraction / fractionalDivider; // ex: 12345 / 10000 -> 1
+            std::cout << digit;                       // prints a digit at a time
+            fraction %= fractionalDivider;            // ex: 12345 % 10000 -> 2345
+            fractionalDivider /= 10;
+        }
+        std::cout << " ";
+    }
 }
