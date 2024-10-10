@@ -15,7 +15,8 @@ const char* triangles(double a, double b, double c);
 
 int main(int argc, char *argv[])
 {
-    int iteration = 1, size = 3;
+    int iteration = 1; // for debugging sake, iteration is changed to higher values.
+    const int size = 3;
     bool isDouble = false;
     int startIndex;
 
