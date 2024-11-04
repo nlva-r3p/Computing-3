@@ -127,8 +127,16 @@ MyComplex MyComplex::operator+(const MyComplex& other) const {
     return MyComplex(real + other.real, imaginary + other.imaginary);
 }
 
+MyComplex MyComplex::operator-(const double& other) {
+    return MyComplex(real - other, imaginary);
+}
+
 MyComplex MyComplex::operator-(const MyComplex& other) const {
     return MyComplex(real - other.real, imaginary - other.imaginary);
+}
+
+MyComplex MyComplex::operator*(const double& other) {
+    return MyComplex(real * other, imaginary * other);
 }
 
 MyComplex MyComplex::operator*(const MyComplex& other) const {
