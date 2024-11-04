@@ -24,8 +24,17 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const MyComplex& number);
     friend std::istream& operator>>(std::istream& is, MyComplex& number);
 
+    // Assignment 6
+    friend MyComplex operator+(const double& num, const MyComplex& cnum);
+    friend MyComplex operator-(const double& num, const MyComplex& cnum);
+    friend MyComplex operator*(const double& num, const MyComplex& cnum);
+    friend MyComplex operator/(const double& num, const MyComplex& cnum);
+
+    MyComplex operator+(const double& other) const;
     MyComplex operator+(const MyComplex& other) const;
+    MyComplex operator-(const double& other) const;
     MyComplex operator-(const MyComplex& other) const;
+    MyComplex operator*(const double& other) const;
     MyComplex operator*(const MyComplex& other) const;
     MyComplex operator/(const double& other) const;
     MyComplex operator/(const MyComplex& other) const;
@@ -117,8 +126,6 @@ std::istream& operator>>(std::istream& is, MyComplex& number) {
     return is;
 }
 
-
-
 MyComplex MyComplex::operator+(const double& other) const {
     return MyComplex(real + other, imaginary);
 }
@@ -127,7 +134,7 @@ MyComplex MyComplex::operator+(const MyComplex& other) const {
     return MyComplex(real + other.real, imaginary + other.imaginary);
 }
 
-MyComplex MyComplex::operator-(const double& other) {
+MyComplex MyComplex::operator-(const double& other) const {
     return MyComplex(real - other, imaginary);
 }
 
@@ -135,7 +142,7 @@ MyComplex MyComplex::operator-(const MyComplex& other) const {
     return MyComplex(real - other.real, imaginary - other.imaginary);
 }
 
-MyComplex MyComplex::operator*(const double& other) {
+MyComplex MyComplex::operator*(const double& other) const {
     return MyComplex(real * other, imaginary * other);
 }
 
@@ -147,7 +154,7 @@ MyComplex MyComplex::operator*(const MyComplex& other) const {
 
 MyComplex MyComplex::operator/(const double& other) const {
     if (other == 0)
-        std::err << "Error! Division by 0!" << std::endl
+        std::cerr << "Error! Division by 0!" << std::endl;
     
     double newReal = real / other;
     double newImaginary = imaginary / other;
@@ -156,6 +163,10 @@ MyComplex MyComplex::operator/(const double& other) const {
 
 MyComplex MyComplex::operator/(const MyComplex& other) const {
     double denominator = other.real * other.real + other.imaginary * other.imaginary;
+
+    if (denominator == 0)
+        std::cerr << "Error! Division by 0!" << std::endl;
+
     double newReal = (real * other.real + imaginary * other.imaginary) / denominator;
     double newImaginary = (imaginary * other.real - real * other.imaginary) / denominator;
     return MyComplex(newReal, newImaginary);
@@ -163,6 +174,30 @@ MyComplex MyComplex::operator/(const MyComplex& other) const {
 
 MyComplex MyComplex::operator!() const {
     return MyComplex(real, -imaginary);
+}
+
+MyComplex operator+(const double& num, const MyComplex& cnum) {
+    return MyComplex(num + cnum.real, cnum.imaginary);
+}
+
+MyComplex operator-(const double& num, const MyComplex& cnum) {
+    return MyComplex(num - cnum.real, -cnum.imaginary);
+}
+
+MyComplex operator*(const double& num, const MyComplex& cnum) {
+    return MyComplex(num * cnum.real, num * cnum.imaginary);
+}
+
+MyComplex operator/(const double& num, const MyComplex& cnum) {
+    double denominator = cnum.real * cnum.real + cnum.imaginary * cnum.imaginary;
+
+    if (denominator == 0)
+        std::cerr << "Error! Division by 0!" << std::endl;
+
+    double newReal = num * cnum.real / denominator;
+    double newImaginary = -num * cnum.imaginary / denominator;
+
+    return MyComplex(newReal, newImaginary);
 }
 
 // Main function
@@ -252,7 +287,7 @@ int main() {
     std::cout << "After m1.setNumbers(10, -4): " << m1 << std::endl;
 
     // Using conjugate
-    m1.conjugate();
+    m1.conjugateNumbers();
     std::cout << "After m1.conjugate(): " << m1 << std::endl;
 
 
@@ -288,6 +323,39 @@ int main() {
     std::cout << "realOnlyNumber (-2+0i): " << realOnlyNumber << std::endl;
     std::cout << "imagOnlyNumber1 (0+3i): " << imagOnlyNumber1 << std::endl;
     std::cout << "imagOnlyNumber2 (0-4i): " << imagOnlyNumber2 << std::endl;
+
+
+
+    // Testing HW 6 functions
+    std::cout << "\n\n\n\n\n// Testing HW 6 functions\n" << std::endl;
+
+    MyComplex c6(3, 4);
+    double scalar = 2.0;
+
+    // Addition with double
+    std::cout << "Testing addition with double:" << std::endl;
+    std::cout << "c6 + scalar (" << c6 << " + " << scalar << ") == " << (c6 + scalar) << std::endl;
+    std::cout << "scalar + c6 (" << scalar << " + " << c6 << ") == " << (scalar + c6) << std::endl;
+
+    // Subtraction with double
+    std::cout << "\nTesting subtraction with double:" << std::endl;
+    std::cout << "c6 - scalar (" << c6 << " - " << scalar << ") == " << (c6 - scalar) << std::endl;
+    std::cout << "scalar - c6 (" << scalar << " - " << c6 << ") == " << (scalar - c6) << std::endl;
+
+    // Multiplication with double
+    std::cout << "\nTesting multiplication with double:" << std::endl;
+    std::cout << "c6 * scalar (" << c6 << " * " << scalar << ") == " << (c6 * scalar) << std::endl;
+    std::cout << "scalar * c6 (" << scalar << " * " << c6 << ") == " << (scalar * c6) << std::endl;
+
+    // Division with double
+    std::cout << "\nTesting division with double:" << std::endl;
+    std::cout << "c6 / scalar (" << c6 << " / " << scalar << ") == " << (c6 / scalar) << std::endl;
+    std::cout << "scalar / c6 (" << scalar << " / " << c6 << ") == " << (scalar / c6) << std::endl;
+
+    // Division of two MyComplex objects
+    std::cout << "\nTesting division of two MyComplex objects:" << std::endl;
+    MyComplex c7(1, -1);
+    std::cout << "c6 / c7 (" << c6 << " / " << c7 << ") == " << (c6 / c7) << std::endl;
 
     return 0;
 }
