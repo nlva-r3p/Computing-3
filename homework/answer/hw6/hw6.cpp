@@ -104,24 +104,50 @@ std::ostream& operator<<(std::ostream& os, const MyComplex& number) {
 }
 
 std::istream& operator>>(std::istream& is, MyComplex& number) {
+    number.real = 0;
+    number.imaginary = 0;
+
     double r;
     is >> r;
 
-    char op; // operator is a reserved keyword so can't use char operator
-    is >> op;
+    // is nextChar whitespac or 'i'
+    char nextChar = is.peek();
+    while (nextChar == ' ') {
+        is.get();
+        nextChar = is.peek();
+    }
 
-    double i;
-    is >> i;
+    // is the only input the imaginary part
+    if (nextChar == 'i') {
+        number.imaginary = r;
+        is.get(); // omit 'i'
+        return is;
+    } else {
+        number.real = r; // proceed as normal
+    }
 
-    char i_placeholder;
-    is >> i_placeholder;
+    is >> nextChar;
+    if (nextChar == '+' || nextChar == '-') {
+        double i;
+        is >> i;
 
-    number.real = r;
+        char i_placeholder = is.peek();
+        while (i_placeholder == ' ') {
+            is.get();
+            i_placeholder = is.peek();
+        }
 
-    if (op == '+')
-        number.imaginary = i;
-    else if (op == '-')
-        number.imaginary = -i;
+        if (i_placeholder == 'i') {
+            is.get(); // omit 'i'
+            number.imaginary = (nextChar == '+') ? i : -i;
+        } else {
+            number.real += (nextChar == '+') ? i : -i;
+        }
+    } else {
+        is.unget();
+    }
+
+    //is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     return is;
 }
