@@ -59,20 +59,18 @@ class KiloZorb : public Zorb {
 };
 
 int main() {
-    // Create some Zorb instances
-    Zorb zorb1(10, 1);  // Power: 10, Team ID: 1
-    Zorb zorb2(1000, 2);  // Power: 15, Team ID: 2
+    Zorb zorb1(10, 1);  
+    Zorb zorb2(1000, 2);  
 
-    // Create some KiloZorb instances
-    KiloZorb kzorb1(20, 3); // Effective Power: 20,000, Team ID: 1
-    KiloZorb kzorb2(5, 4);  // Effective Power: 5,000, Team ID: 2
-
+    KiloZorb kzorb1(20, 3); 
+    KiloZorb kzorb2(5, 4); 
+    
+    // For some behavioral testings
     Zorb* z1 = &zorb1;
     Zorb* z2 = &zorb2;
     Zorb* kz1 = &kzorb1;
     Zorb* kz2 = &kzorb2;
 
-    // Display their powers and team IDs
     std::cout << "Zorb1: " << *z1 << std::endl;
     std::cout << "Zorb2: " << *z2 << std::endl;
     std::cout << "KiloZorb1: " << *kz1 << std::endl;
@@ -94,6 +92,8 @@ int main() {
         std::cout << "Zorb1 is less than KiloZorb1" << std::endl;
     else
         std::cout << "Zorb1 is not less than KiloZorb1" << std::endl;
+
+    std::cout << "\n\n" << std::endl;
 
     Zorb zorbSum = *z1 + *z2;
     std::cout << "Zorb1 + Zorb2 = " << zorbSum << std::endl;
