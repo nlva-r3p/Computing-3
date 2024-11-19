@@ -44,69 +44,67 @@ std::ostream& operator<< (std::ostream& os, const Zorb& z) {
 
 class KiloZorb : public Zorb {
      public:
-          KiloZorb(int p, int t) : Zorb(p * 1000, t) {}
+        KiloZorb(int p, int t) : Zorb(p * 1000, t) {}
 
-          virtual bool operator< (const Zorb& z) const override {
-               return Zorb::operator<(z);
-          }
+        bool operator< (const Zorb& z) const override {
+            return Zorb::operator<(z);
+        }
 
-          virtual Zorb operator+ (const Zorb& z) const {
-               Zorb temp = Zorb::operator+(z);
-               return KiloZorb(temp.getPower(), temp.getTeamID());
-          }
-
-
+        Zorb operator+ (const Zorb& z) const override {
+            //Zorb temp = Zorb::operator+(z);
+            int sumPower = this->getPower() + z.getPower();
+            int newTeamID = ((*this < z) ? z.getTeamID() : this->getTeamID());
+            return KiloZorb(sumPower / 1000, newTeamID);
+        }
 };
 
 int main() {
     // Create some Zorb instances
     Zorb zorb1(10, 1);  // Power: 10, Team ID: 1
-    Zorb zorb2(15, 2);  // Power: 15, Team ID: 2
+    Zorb zorb2(1000, 2);  // Power: 15, Team ID: 2
 
     // Create some KiloZorb instances
     KiloZorb kzorb1(20, 3); // Effective Power: 20,000, Team ID: 1
     KiloZorb kzorb2(5, 4);  // Effective Power: 5,000, Team ID: 2
 
+    Zorb* z1 = &zorb1;
+    Zorb* z2 = &zorb2;
+    Zorb* kz1 = &kzorb1;
+    Zorb* kz2 = &kzorb2;
+
     // Display their powers and team IDs
-    std::cout << "Zorb1: " << zorb1 << std::endl;
-    std::cout << "Zorb2: " << zorb2 << std::endl;
-    std::cout << "KiloZorb1: " << kzorb1 << std::endl;
-    std::cout << "KiloZorb2: " << kzorb2 << std::endl;
+    std::cout << "Zorb1: " << *z1 << std::endl;
+    std::cout << "Zorb2: " << *z2 << std::endl;
+    std::cout << "KiloZorb1: " << *kz1 << std::endl;
+    std::cout << "KiloZorb2: " << *kz2 << std::endl;
 
-    // Perform comparisons
-    std::cout << "\nComparisons:" << std::endl;
+    std::cout << "\n\n" << std::endl;
 
-    if (zorb1 < zorb2)
+    if (*z1 < *z2)
         std::cout << "Zorb1 is less than Zorb2" << std::endl;
     else
         std::cout << "Zorb1 is not less than Zorb2" << std::endl;
 
-    if (kzorb1 < kzorb2)
+    if (*kz1 < *kz2)
         std::cout << "KiloZorb1 is less than KiloZorb2" << std::endl;
     else
         std::cout << "KiloZorb1 is not less than KiloZorb2" << std::endl;
 
-    if (zorb1 < kzorb1)
+    if (*z1 < *kz1)
         std::cout << "Zorb1 is less than KiloZorb1" << std::endl;
     else
         std::cout << "Zorb1 is not less than KiloZorb1" << std::endl;
 
-    // Perform additions
-    std::cout << "\nAdditions:" << std::endl;
-
-    // Add two Zorbs
-    Zorb zorbSum = zorb1 + zorb2;
+    Zorb zorbSum = *z1 + *z2;
     std::cout << "Zorb1 + Zorb2 = " << zorbSum << std::endl;
 
-    // Add two KiloZorbs
-    Zorb kzorbSum = kzorb1 + kzorb2;
+    Zorb kzorbSum = *kz1 + *kz2;
     std::cout << "KiloZorb1 + KiloZorb2 = " << kzorbSum << std::endl;
 
-    // Add a Zorb and a KiloZorb
-    Zorb mixedSum1 = zorb1 + kzorb1;
+    Zorb mixedSum1 = *z1 + *kz1;
     std::cout << "Zorb1 + KiloZorb1 = " << mixedSum1 << std::endl;
 
-    Zorb mixedSum2 = kzorb1 + zorb2;
+    Zorb mixedSum2 = *kz1 + *z2;
     std::cout << "KiloZorb1 + Zorb2 = " << mixedSum2 << std::endl;
 
     return 0;
