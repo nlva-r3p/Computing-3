@@ -403,7 +403,7 @@ int main() {
     MyComplex<double> c7(1.1, -1.2);
     std::cout << "c6 / c7 (" << c6 << " / " << c7 << ") == " << (c6 / c7) << std::endl;
 
-    std::cout << "===== Testing MyComplex<int> =====\n" << std::endl;
+    std::cout << "\n===== Testing MyComplex<int> =====\n" << std::endl;
 
     MyComplex<int> c1_int; // default constructor
     MyComplex<int> c2_int(9, 8); // 2-value constructor
